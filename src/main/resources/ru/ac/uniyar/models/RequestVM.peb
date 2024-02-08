@@ -1,0 +1,51 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Просмотр заявки
+        {% endblock %}
+
+        {% set request = model.request %}
+        {% set errorsHandler = model.errorsHandler %}
+
+    {% block content %}
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Информация о заявке</h2>
+        </div>
+        <div class="callout">
+            <h5>Статус</h5>
+            <p>{{ request.status.title }}</p>
+        </div>
+        <div class="callout">
+            <h5>Категория</h5>
+            <p>{{ request.serviceCategory.title }}</p>
+        </div>
+        <div class="callout">
+            <h5>Специалист</h5>
+            <p><a href="/specialist/list/{{ request.specialist.id }}">{{ request.specialist.fullName }}</a></p>
+        </div>
+        <div class="callout">
+            <h5>Опыт специалиста в категории</h5>
+            <p>{{ request.experience }}</p>
+        </div>
+        {% if user.role.permissions.canOperateAllRequests %}
+            <div class="callout">
+                <form method="post">
+                    <div class="large-6 medium-4 cell">
+                        <label>Комментарий</label>
+                        <input type="text" name="commentary" placeholder="" value="{{ fields["commentary"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("commentary") }}</p>
+                    </div>
+                    <input type="submit" name="confirm" value="Принять" class="button" />
+                    <input type="submit" name="reject" value="Отклонить" class="button" />
+                </form>
+            </div>
+        {% endif %}
+        {% if request.status.id == 3 %}
+            <div>
+                <h5 class="error">Заявка была отклонена со следующим комментарием:</h5>
+                <p>{{ request.commentary }}</p>
+            </div>
+        {% endif %}
+    </div>
+    {% endblock %}

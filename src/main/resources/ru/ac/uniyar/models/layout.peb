@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Нет заголовка{% endblock %}</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <li class="menu-text">Поиск специалистов</li>
+            <li><a href="/home">Стартовая страница</a></li>
+            <li><a href="/advert/list?city_title={{ user.city.title }}">Список объявлений</a></li>
+            <li><a href="/city/list">Список городов</a></li>
+            <li><a href="/service_category/list">Список категорий</a></li>
+            {% if user.role.permissions.canWatchSelfRequests or user.role.permissions.canWatchAllRequests %}
+                <li><a href="/request/list">Управление заявками</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            {% if user is null %}
+                <li ><b><a href="/login">Вход</a></b></li>
+                {% else %}
+                <li class="menu-text">{{ user.name }}</li>
+                <li ><b><a href="/logout">Выход</a></b></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+<div class="grid-container">
+
+{% block content %}
+    Нет содержимого
+{% endblock %}
+
+</div>
+
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

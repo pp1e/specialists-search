@@ -1,0 +1,37 @@
+package ru.ac.uniyar.domain.operations
+
+import org.ktorm.database.Database
+
+class OperationsHolder(database: Database, salt: String) {
+    val addAdvertOperation = AddAdvertOperation(database)
+    val addSpecialistOperation = AddSpecialistOperation(database)
+    val addCityOperation = AddCityOperation(database)
+    val addServiceCategoryOperation = AddServiceCategoryOperation(database)
+    val fetchAdvertOperation = FetchAdvertOperation(database)
+    val fetchCityOperation = FetchCityOperation(database)
+    val fetchSpecialistOperation = FetchSpecialistOperation(database)
+    val fetchServiceCategoryOperation = FetchServiceCategoryOperation(database)
+    val getAdvertListOperation = GetAdvertListOperation(database)
+    val getAdvertListForSpecialistOperation = GetAdvertListForSpecialistOperation(database)
+    val getAdvertsCountForCategoryInCityOperation = GetAdvertsCountForCategoryInCityOperation(database)
+    val getAdvertsCountOperation = GetAdvertsCountOperation(database)
+    val getAdvertsCountForCategoryOperation = GetAdvertsCountForCategoryOperation(database)
+    val getCityListOperation = GetCityListOperation(database)
+    val getServiceCategoryListOperation = GetServiceCategoryListOperation(database)
+    val getServiceCategoryListForCityOperation = GetServiceCategoryListForCityOperation(database)
+    val getSpecialistListOperation = GetSpecialistListOperation(database)
+    val getSpecialistNamesOperation = GetSpecialistNamesOperation(database)
+    val getSpecialistCountOperation = GetSpecialistsCountOperation(database)
+    val getCityTitlesOperation = GetCityTitlesOperation(database)
+    val getServiceCategoryTitlesOperation = GetServiceCategoryTitlesOperation(database)
+    val addUserOperation = AddUserOperation(database, salt)
+    val getUserOperation = GetUserOperation(database)
+    val checkPasswordOperation = CheckPasswordOperation(database, salt)
+    val updateUserOperation = UpdateUserOperation(database)
+    val getRequestListOperation = GetRequestListOperation(database)
+    val fetchRequestOperation = FetchRequestOperation(database)
+    val addRequestOperation = AddRequestOperation(database)
+    val updateRequestOperation = UpdateRequestOperation(database)
+    val getServiceCategoryTitlesFromRequestsOperation = GetServiceCategoryTitlesFromRequestsOperation(database)
+    val updateAdvertOperation = UpdateAdvertOperation(database)
+}

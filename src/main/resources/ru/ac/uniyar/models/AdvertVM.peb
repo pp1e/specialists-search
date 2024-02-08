@@ -1,0 +1,44 @@
+{% extends "./layout.peb" %}
+
+    {% block title %}
+Просмотр объявления
+{% endblock %}
+
+    {% set advert = model.advert %}
+
+    {% block content %}
+<div class="grid-y grid-padding-y">
+    <div class="large-5 medium-6 cell">
+        <h2>Информация об объявлении</h2>
+    </div>
+    <div class="callout">
+      <h5>Дата добавления</h5>
+      <p>{{ advert.date }}</p>
+    </div>
+    <div class="callout">
+      <h5>Категория услуги</h5>
+      <p>{{ advert.serviceCategory.title }}</p>
+    </div>
+    <div class="callout">
+      <h5>Название объявления</h5>
+      <p>{{ advert.title }}</p>
+    </div>
+    <div class="callout">
+      <h5>Описание</h5>
+      <p>{{ advert.description }}</p>
+    </div>
+    <div class="callout">
+      <h5>ФИО специалиста</h5>
+      <p><a href="/specialist/list/{{ advert.specialist.id }}">{{ advert.specialist.fullName }}</a></p>
+    </div>
+    <div class="callout">
+        <h5>Город</h5>
+        <p><a href="/city/list/{{ advert.city.id }}">{{ advert.city.title }}</a></p>
+    </div>
+    {% if advert.specialist.userLogin == user.login %}
+        <div>
+            <a href="/advert/edit/{{ advert.id }}" class="button">Изменить объявление</a>
+        </div>
+    {% endif %}
+</div>
+    {% endblock %}

@@ -1,0 +1,59 @@
+{% extends "./layout.peb" %}
+
+    {% block title %}
+Поиск специалистов
+{% endblock %}
+
+{% block content %}
+{% set perms=user.role.permissions %}
+
+
+<div class="grid-container">
+    <div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+            <h1>Добро пожаловать на сайт{% if user is not null %}, {{ user.name }}{% endif %}!</h1>
+        </div>
+    </div>
+
+    <div class="grid-y grid-padding-y">
+        <div class="large-12 cell">
+            {% if user is not null %}
+                <div class="callout">
+                    <div class="grid-y grid-padding-y">
+                        <div class="large-5 medium-6 cell">
+                            <h4>Информация о Вашем профиле:</h4>
+                        </div>
+                        <div class="callout">
+                            <h5>Роль</h5>
+                            <p>{{ user.role.name }}</p>
+                        </div>
+                        <div class="callout">
+                            <h5>Имя</h5>
+                            <p>{{ user.name }}</p>
+                        </div>
+                        {% if perms.canChangeCity %}
+                            <div class="callout">
+                                <h5>Город</h5>
+                                <p>{{ user.city.title }}</p>
+                            </div>
+                            <div class="large-4 medium-4">
+                                <a href="/profile/edit" class="button">Изменить информацию</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="callout">
+            <h5>Количество специалистов</h5>
+            <p>{{ model.specialistsCount }}</p>
+        </div>
+        <div class="callout">
+            <h5>Среднее количество объявлений на одного специалиста</h5>
+            <p>{{ model.avgAdverts }}</p>
+        </div>
+        <h4>ER-диаграмма сущностей</h4>
+        <img src="/images/er_diagram.png" >
+    </div>
+</div>
+{% endblock %}

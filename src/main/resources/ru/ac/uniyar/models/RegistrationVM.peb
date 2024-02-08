@@ -1,0 +1,55 @@
+{% extends "./layout.peb" %}
+
+        {% block title %}
+        Регистрация
+        {% endblock %}
+
+    {% block content %}
+        {% set fields = model.webForm.fields %}
+        {% set errorsHandler = model.errorsHandler %}
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Введите данные для регистрации</h2>
+        </div>
+
+        <form method="post">
+            <div class="grid-y grid-margin-x large-offset-4" >
+                <div class="large-6 medium-4 callout">
+                    <div class="large-6 medium-4 cell">
+                        <label>Логин</label>
+                        <input type="text" name="login" placeholder="" value="{{ fields["login"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("login") }}</p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <label>Пароль</label>
+                        <input type="password" name="password" placeholder="" value="{{ fields["password"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("password") }}</p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <label>Повторите пароль</label>
+                        <input type="password" name="passwordRepeat" placeholder="" value="{{ fields["passwordRepeat"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("passwordRepeat") }}</p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <label>Ваше имя</label>
+                        <input type="text" name="name" placeholder="" value="{{ fields["name"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("name") }}</p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <label>Город</label>
+                        <select name="cityID">
+                                {% for city in model.cityTitles %}
+                                <option value={{ city.key }}>{{ city.value }}</option>
+                                {% endfor %}
+                        </select>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("title") }}</p>
+                        <p>Если Вашего города нет в списке, пожалуйста, <a href="/city/add">добавьте его</a></p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <input type="submit" value="Зарегестрироваться" class="button" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endblock %}

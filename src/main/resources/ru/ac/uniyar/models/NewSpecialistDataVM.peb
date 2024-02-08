@@ -1,0 +1,38 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Добавить специалиста
+        {% endblock %}
+
+    {% block content %}
+    <div>
+        <h2>Введите информацию о специалисте</h2>
+    </div>
+
+    {% set fields = model.webForm.fields %}
+    {% set errorsHandler = model.errorsHandler %}
+    <form method="post">
+        <div class="grid-x grid-padding-x">
+            <div class="large-6 medium-4 cell">
+                <label>ФИО специалиста</label>
+                <input type="text" name="fullName" placeholder="" value="{{ fields["fullName"] | first }}"/>
+                <p class="form-error is-visible">{{ errorsHandler.errorToString("fullName") }}</p>
+            </div>
+            <div class="large-6 medium-4 cell">
+                <label>Образование, сертификация</label>
+                <input type="text" name="education" placeholder="" value="{{ fields["education"] | first }}"/>
+                <p class="form-error is-visible">{{ errorsHandler.errorToString("education") }}</p>
+            </div>
+            <div class="large-6 medium-4 cell">
+                <label>Номер телефона</label>
+                <input type="text" name="phoneNumber" placeholder="" value="{{ fields["phoneNumber"] | first }}"/>
+                <p class="form-error is-visible">{{ errorsHandler.errorToString("phoneNumber") }}</p>
+            </div>
+            <div class="large-6 medium-4 cell"></div>
+            <div class="large-6 medium-4 cell"></div>
+            <div class="large-6 medium-4 cell">
+                <input type="submit" value="Добавить" class="button" />
+            </div>
+        </div>
+    </form>
+    {% endblock %}

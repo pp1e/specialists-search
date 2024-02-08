@@ -1,0 +1,65 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Просмотр информации о городе
+        {% endblock %}
+
+        {% set city = model.city %}
+        {% set fields = model.fields %}
+
+    {% block content %}
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Информация о городе</h2>
+        </div>
+        <div class="callout">
+            <h5>Название</h5>
+            <p>{{ city.title }}</p>
+        </div>
+    </div>
+
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Список категорий услуг в городе</h2>
+        </div>
+        <div class="large-4 medium-4 cell">
+            <a href="/service_category/add" class="button">Добавить категорию услуги</a>
+        </div>
+    </div>
+
+
+    {% set page = model.serviceCategoryPage %}
+
+    <table>
+        <thead>
+        <tr>
+            <th width="300">Дата добавления</th>
+            <th width="500">Название</th>
+            <th width="400">Количество объявлений</th>
+            <th width="500">Список объявлений</th>
+        </tr>
+        </thead>
+        <tbody>
+                {% for serviceCategory in page.elementsOnPage() %}
+            <tr>
+                <td>{{ serviceCategory.date }}</td>
+                <td>{{ serviceCategory.title }}</td>
+                <td>{{ serviceCategory.advertsCount }}</td>
+                <td><a href="/advert/list?service_category_title={{ serviceCategory.title }}&city_title={{ city.title }}">Ссылка</a></td>
+            </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+        <p>
+            <b>{{ page.currentPageToString }}</b>
+            {% if page.isPrevPageAvailable() %}
+                <a href="/service_category/list/{{ city.id }}?page={{ page.prevPage() }}">Назад</a>
+            {% endif %}
+            {% if page.isNextPageAvailable() %}
+                <a href="/service_category/list/{{ city.id }}?page={{ page.nextPage() }}">Вперёд</a>
+            {% endif %}
+        </p>
+    </div>
+    {% endblock %}

@@ -1,0 +1,57 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Добавить объявление
+{% endblock %}
+
+{% block content %}
+<div>
+    <h2>Введите информацию об объявлении</h2>
+</div>
+
+{% set fields = model.webForm.fields %}
+{% set errorsHandler = model.errorsHandler %}
+{% set selectedSpec = model.selectedSpecialist %}
+
+<form method="post">
+    <div class="grid-x grid-padding-x">
+        <div class="large-6 medium-4 cell">
+            <label>Категория услуги</label>
+            <select name="serviceCategoryID">
+                    {% for serviceCategoryTitle in model.serviceCategoryTitles %}
+                    {% if serviceCategoryTitle.key.toString() == (fields["serviceCategoryID"] | first) %}
+                        <option selected value={{ serviceCategoryTitle.key }}>{{ serviceCategoryTitle.value }}</option>
+                        {% else %}
+                        <option value={{ serviceCategoryTitle.key }}>{{ serviceCategoryTitle.value }}</option>
+                    {% endif %}
+                    {% endfor %}
+            </select>
+            <p class="form-error is-visible">{{ errorsHandler.errorToString("serviceCategoryID") }}</p>
+        </div>
+        <div class="large-6 medium-4 cell">
+            <label>Город</label>
+            <p>{{ user.city.title }}</p>
+        </div>
+        <div class="large-6 medium-4 cell">
+            <label>Название</label>
+            <input type="text" name="title" placeholder="" value="{{ fields["title"] | first }}"/>
+            <p class="form-error is-visible">{{ errorsHandler.errorToString("title") }}</p>
+        </div>
+        <div class="large-6 medium-4 cell">
+            <label>Специалист</label>
+            <p>{{ user.name }}</p>
+        </div>
+        <div class="large-6 medium-4 cell">
+            <label>Описание</label>
+            <input type="text" name="description" placeholder="" value="{{ fields["description"] | first }}"/>
+            <p class="form-error is-visible">{{ errorsHandler.errorToString("description") }}</p>
+        </div>
+
+        <div class="large-6 medium-4 cell"></div>
+        <div class="large-6 medium-4 cell"></div>
+        <div class="large-6 medium-4 cell">
+            <input type="submit" value="Добавить" class="button" />
+        </div>
+    </div>
+</form>
+{% endblock %}

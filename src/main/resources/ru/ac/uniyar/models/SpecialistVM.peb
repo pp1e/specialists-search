@@ -1,0 +1,79 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Просмотр информации о специалисте
+        {% endblock %}
+
+        {% set specialist = model.specialist %}
+        {% set page = model.advertPage %}
+
+    {% block content %}
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Информация о специалисте</h2>
+        </div>
+        <div class="callout">
+            <h5>Дата добавления</h5>
+            <p>{{ specialist.date }}</p>
+        </div>
+        <div class="callout">
+            <h5>ФИО</h5>
+            <p>{{ specialist.fullName }}</p>
+        </div>
+        <div class="callout">
+            <h5>Образование/спецификация</h5>
+            <p>{{ specialist.education }}</p>
+        </div>
+        {% if user.role.permissions.canWatchContactInfo %}
+            {% if model.showContactInfo %}
+            <div class="callout">
+                <h5>Номер телефона</h5>
+                <p>{{ specialist.phoneNumber }}</p>
+            </div>
+                {% else %}
+                <div class="large-4 medium-4 cell">
+                    <a href="/specialist/list/{{ specialist.id }}?info=true" class="button">
+                        Посмотреть контактную информацию
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="grid-x grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Список объявлений специалиста</h2>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th width="300">Дата добавления</th>
+            <th width="500">Название</th>
+            <th width="400">Подробная информация</th>
+        </tr>
+        </thead>
+        <tbody>
+                {% for advert in page.elementsOnPage() %}
+            <tr>
+                <td>{{ advert.date }}</td>
+                <td>{{ advert.title }}</td>
+                <td><a href="/advert/list/{{ advert.id }}">Ссылка</a></td>
+            </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+        <p>
+            <b>{{ page.currentPageToString }}</b>
+            {% if page.isPrevPageAvailable() %}
+                <a href="/specialist/list/{{ specialist.id }}?page={{ page.prevPage() }}">Назад</a>
+            {% endif %}
+            {% if page.isNextPageAvailable() %}
+                <a href="/specialist/list/{{ specialist.id }}?page={{ page.nextPage() }}">Вперёд</a>
+            {% endif %}
+        </p>
+    </div>
+    {% endblock %}

@@ -1,0 +1,68 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Управления заявками
+        {% endblock %}
+
+    {% set perms=user.role.permissions %}
+
+    {% block content %}
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>
+                    {% if perms.canOperateSelfRequests %}
+                    Список Ваших заявок
+                    {% elseif perms.canOperateAllRequests %}
+                    Список заявок
+                    {% endif %}
+            </h2>
+        </div>
+    </div>
+
+
+    {% set page = model.requestPage %}
+    {% set fields = model.fields %}
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-9 cell">
+            <table>
+                <thead>
+                <tr>
+                    <th width="500">Категория</th>
+                    <th width="400">Статус</th>
+                    <th width="400">Страница заявки</th>
+                </tr>
+                </thead>
+                <tbody>
+                        {% for request in page.elementsOnPage() %}
+                    <tr>
+                        <td>{{ request.serviceCategory.title }}</td>
+                        <td>{{ request.status.title }}</td>
+                        <td><a href="/request/list/{{ request.id }}">Ссылка</a></td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+
+            <div>
+                <p>
+                    <b>{{ page.currentPageToString }}</b>
+                    {% if page.isPrevPageAvailable() %}
+                        <a href="/request/list?page={{ page.prevPage() }}">Назад</a>
+                    {% endif %}
+                    {% if page.isNextPageAvailable() %}
+                        <a href="/request/list?page={{ page.nextPage() }}">Вперёд</a>
+                    {% endif %}
+                </p>
+            </div>
+
+            {% if user.role.permissions.canSubmitRequest %}
+                <div class="large-4 medium-4">
+                    <a href="/request/add" class="button">Добавить заявку</a>
+                </div>
+            {% endif %}
+        </div>
+
+
+    </div>
+    {% endblock %}

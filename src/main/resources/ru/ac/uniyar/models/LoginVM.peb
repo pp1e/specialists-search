@@ -1,0 +1,42 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Вход в аккаунт
+        {% endblock %}
+
+    {% block content %}
+    {% set fields = model.webForm.fields %}
+    {% set errorsHandler = model.errorsHandler %}
+    <div class="grid-y grid-padding-y">
+        <div class="large-5 medium-6 cell">
+            <h2>Введите логин и пароль для входа</h2>
+        </div>
+
+        <form method="post">
+            <div class="grid-y grid-margin-x large-offset-4" >
+                <div class="large-6 medium-4 callout">
+                    <div class="large-6 medium-4 cell">
+                        <label>Логин</label>
+                        <input type="text" name="login" placeholder="" value="{{ fields["login"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("login") }}</p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <label>Пароль</label>
+                        <input type="password" name="password" placeholder="" value="{{ fields["password"] | first }}"/>
+                        <p class="form-error is-visible">{{ errorsHandler.errorToString("password") }}</p>
+                    </div>
+                    <div class="large-6 medium-4 cell">
+                        <input type="submit" value="Войти" class="button" />
+                    </div>
+                </div>
+                <div>
+                    <h5><a href="/register">Регистрация</a></h5>
+                </div>
+                <div>
+                    <h5>Профиль администратора</h5>
+                    <p>Логин: admin, Пароль: admin</p>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endblock %}

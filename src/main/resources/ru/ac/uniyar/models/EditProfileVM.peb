@@ -1,0 +1,40 @@
+    {% extends "./layout.peb" %}
+
+        {% block title %}
+        Редактировать профиль
+        {% endblock %}
+
+    {% block content %}
+    <div>
+        <h2>Измените необходимую информацию</h2>
+    </div>
+
+    {% set fields = model.webForm.fields %}
+    {% set errorsHandler = model.errorsHandler %}
+    <form method="post">
+        <div class="grid-x grid-padding-x">
+            <div class="large-6 medium-4 cell">
+                <label>Ваше имя</label>
+                <input type="text" name="name" placeholder="" value="{{ fields["name"] | first }}"/>
+                <p class="form-error is-visible">{{ errorsHandler.errorToString("name") }}</p>
+            </div>
+            <div class="large-6 medium-4 cell">
+                <label>Город</label>
+                <select name="cityID">
+                    {% for city in model.cityTitles %}
+                    {% if city.key.toString() == (fields["cityID"] | first) %}
+                        <option selected value={{ city.key }}>{{ city.value }}</option>
+                    {% else %}
+                        <option value={{ city.key }}>{{ city.value }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <p class="form-error is-visible">{{ errorsHandler.errorToString("cityID") }}</p>
+                <p>Если Вашего города нет в списке, пожалуйста, <a href="/city/add">добавьте его</a></p>
+            </div>
+            <div class="large-6 medium-4 cell">
+                <input type="submit" value="Изменить" class="button" />
+            </div>
+        </div>
+    </form>
+    {% endblock %}
